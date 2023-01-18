@@ -73,7 +73,8 @@ func LogIn(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		str, _ := middleware.GenerateJWT(username)
-		http.SetCookie(w, &http.Cookie{Name: "jwt", Value: str, Expires: time.Now().Add(1 * time.Minute)})
+		// set token on cookies storage with 10 minutes time limit
+		http.SetCookie(w, &http.Cookie{Name: "jwt", Value: str, Expires: time.Now().Add(10 * time.Minute)})
 		w.WriteHeader(http.StatusOK)
 		_, err := w.Write([]byte("Login Successfully\n"))
 		if err != nil {
