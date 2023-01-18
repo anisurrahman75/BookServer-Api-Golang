@@ -1,14 +1,8 @@
-package ServerDatabase
+package db
 
-type Book struct {
-	UUID        int    `json:"uuid"`
-	Name        string `json:"name"`
-	Author      string `json:"author"`
-	PublishDate string `json:"publishDate"`
-	ISBN        string `json:"ISBN"`
-}
+import "apiDesign/model"
 
-var BookList = map[int]Book{
+var BookList = map[int]model.Book{
 	1: {UUID: 1, Name: "learn-api", Author: "Anisur", PublishDate: "01-02-2022", ISBN: "0999-0555-5954"},
 	2: {UUID: 2, Name: "learn-api", Author: "Anisur", PublishDate: "01-02-2022", ISBN: "0999-0555-5954"},
 	3: {UUID: 3, Name: "learn-api", Author: "Anisur", PublishDate: "01-02-2022", ISBN: "0999-0555-5954"},

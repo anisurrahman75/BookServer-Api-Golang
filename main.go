@@ -1,9 +1,7 @@
 package main
-
 import (
-	"apiDesign/Controller"
+	"apiDesign/api"
 )
-
 func main() {
-	Controller.Createrouter()
+	api.CreateRouter()
 }
