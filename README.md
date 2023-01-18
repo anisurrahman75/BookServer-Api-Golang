@@ -7,7 +7,7 @@
     5. Signature= Server generate signature with server secret key
     6. when same user trying to do visit any end-point where need JWT Authorization..
     7. then we need to pass authorization request with bearer token
-    8. browser will check this bearer token and verify it.
+    8. Server will check this bearer token and verify it.
 # Resources
     1.JWT:https://blog.logrocket.com/jwt-authentication-go/ 
     
