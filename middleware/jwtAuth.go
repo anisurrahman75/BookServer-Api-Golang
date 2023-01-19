@@ -11,6 +11,7 @@ var sampleSecretKey = []byte("bolaJabeNah")
 
 func GenerateJWT(userName string) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
+
 	claims := token.Claims.(jwt.MapClaims)
 	claims["exp"] = time.Now().Add(10 * time.Minute).Unix()
 	claims["authorized"] = true
@@ -25,6 +26,7 @@ func VerifyJWT(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
 
 		authHeader := request.Header.Get("Authorization")
+		//fmt.Println(authHeader)
 		if len(authHeader) > 0 {
 			jwtToken := authHeader[7:]
 			token, err := jwt.Parse(jwtToken, func(t *jwt.Token) (interface{}, error) {

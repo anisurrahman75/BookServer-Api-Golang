@@ -21,6 +21,7 @@ func Welcome(w http.ResponseWriter, r *http.Request) {
 	}
 	return
 }
+
 func AllBookList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
 	fmt.Println(r.Context().Value("user"))
