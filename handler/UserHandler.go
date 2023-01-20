@@ -5,6 +5,7 @@ import (
 	"apiDesign/middleware"
 	"apiDesign/model"
 	"encoding/json"
+	"fmt"
 
 	"github.com/go-chi/chi/v5"
 	"net/http"
@@ -70,8 +71,7 @@ func LogIn(w http.ResponseWriter, r *http.Request) {
 		// set token on cookies storage
 		http.SetCookie(w, &http.Cookie{Name: "jwt", Value: str, Expires: time.Now().Add(10 * time.Minute)})
 		w.WriteHeader(http.StatusOK)
-		_, err := w.Write([]byte("Login Successfully\n"))
-		_ = err
+		w.Write([]byte(fmt.Sprint("LogIn Successully\nBearer Token Below\n", str)))
 		return
 	}
 	model.RequestForError(http.StatusUnauthorized, "", w, "From LogIn End-Point: Invalid UserName or Password")
