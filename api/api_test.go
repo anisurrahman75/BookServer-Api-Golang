@@ -13,7 +13,7 @@ func Test_Welcome(t *testing.T) {
 	s := CreateNewServer()
 	s.MountHandlers()
 
-	req, _ := http.NewRequest("GET", "/", nil)
+	req, _ := http.NewRequest("GET", "/api", nil)
 	response := executeRequest(req, s)
 	checkResponseCode(t, http.StatusOK, response.Code)
 }
@@ -29,20 +29,20 @@ func Test_logIn(t *testing.T) {
 	}
 	test := []Test{
 		{"POST",
-			"/logIn",
+			"/api/logIn",
 			nil,
 			http.StatusOK,
-			middleware.BasicToken("sunny2741", "123")},
+			middleware.BasicToken("sunny", "123")},
 		{"POST",
-			"/logIn",
+			"/api/logIn",
 			nil,
 			http.StatusUnauthorized,
 			middleware.BasicToken("snny241",
 				"123")},
 		{"POST",
-			"/lgIn",
+			"/api/logIn",
 			nil,
-			http.StatusNotFound,
+			http.StatusOK,
 			middleware.BasicToken("mridul12", "123")},
 	}
 	for _, i := range test {
@@ -64,13 +64,13 @@ func Test_Register(t *testing.T) {
 	test := []Test{
 		{
 			"POST",
-			"/registerUser",
+			"/api/registerUser",
 			bytes.NewReader([]byte(`{"FirstName": "imtiaj", "LastName": "Halder", "UserName": "imtiaj12", "Password": "123"}`)),
 			http.StatusOK,
 		},
 		{
 			"POST",
-			"/registerUser",
+			"/api/registerUser",
 			bytes.NewReader([]byte(`{"FirstName": "imtiaj", "LastName": "Halder", "UserName": "imtiaj12, "Password": "123"}`)),
 			http.StatusBadRequest,
 		},
@@ -94,14 +94,14 @@ func Test_AllBookList(t *testing.T) {
 	test := []Test{
 		{
 			"GET",
-			"/books",
+			"/api/books",
 			nil,
 			middleware.BearerToken("testing"),
 			200,
 		},
 		{
 			"GET",
-			"/books",
+			"/api/books",
 			nil,
 			middleware.BearerToken("testing"),
 			200,
@@ -126,13 +126,13 @@ func Test_AddBook(t *testing.T) {
 	}
 	test := []Test{
 		{"POST",
-			"/books",
+			"/api/books",
 			bytes.NewReader([]byte(`{"UUID": 10, "Name": "learn-api", "Author": "Anisur", "PublishDate": "01-02-2022", "ISBN": "0999-0555-5954"}`)),
 			middleware.BearerToken("sunny"),
 			http.StatusOK,
 		},
 		{"POST",
-			"/books",
+			"/api/books",
 			bytes.NewReader([]byte(`{"UUID: 10, "Name": "learn-api", "Author": "Anisur", "PublishDate": "01-02-2022", "ISBN": "0999-0555-5954"}`)),
 			middleware.BearerToken("sunny"),
 			http.StatusBadRequest,
@@ -158,13 +158,13 @@ func Test_FindBook(t *testing.T) {
 	}
 	test := []Test{
 		{"GET",
-			"/books/1",
+			"/api/books/1",
 			nil,
 			middleware.BearerToken("sunny"),
 			http.StatusOK,
 		},
 		{"GET",
-			"/books/10",
+			"/api/books/10",
 			nil,
 			middleware.BearerToken("sunny"),
 			http.StatusBadRequest,
@@ -189,13 +189,13 @@ func Test_UpdateBook(t *testing.T) {
 	}
 	test := []Test{
 		{"PUT",
-			"/books/4",
+			"/api/books/4",
 			bytes.NewReader([]byte(`{"UUID": 4, "Name": "learn-api", "Author": "RaselVai", "PublishDate": "01-02-2022", "ISBN": "0999-0555-5954"},`)),
 			middleware.BearerToken("sunny"),
 			http.StatusOK,
 		},
 		{"PUT",
-			"/books/100",
+			"/api/books/100",
 			bytes.NewReader([]byte(`{"UUID": 4, "Name": "learn-api", "Author": "RaselVai", "PublishDate": "01-02-2022", "ISBN": "0999-0555-5954"},`)),
 			middleware.BearerToken("sunny"),
 			http.StatusBadRequest,
@@ -220,13 +220,13 @@ func Test_DeleteBook(t *testing.T) {
 	}
 	test := []Test{
 		{"DELETE",
-			"/books/4",
+			"/api/books/4",
 			nil,
 			middleware.BearerToken("sunny"),
 			http.StatusOK,
 		},
 		{"DELETE",
-			"/books/100",
+			"/api/books/100",
 			nil,
 			middleware.BearerToken("sunny"),
 			http.StatusBadRequest,
