@@ -84,6 +84,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 	db.UserList = append(db.UserList, user)
 	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Register Successfully\n"))
 	err = json.NewEncoder(w).Encode(user)
 	if err != nil {
 		model.RequestForError(http.StatusBadRequest, err.Error(), w, "From Register End-Point: Json Data Encode Failed to Response")

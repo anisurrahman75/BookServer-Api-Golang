@@ -13,7 +13,7 @@ func GenerateJWT(userName string) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 
 	claims := token.Claims.(jwt.MapClaims)
-	claims["exp"] = time.Now().Add(10 * time.Minute).Unix()
+	claims["exp"] = time.Now().Add(30 * time.Minute).Unix()
 	claims["authorized"] = true
 	claims["user"] = userName
 	tokenString, err := token.SignedString(sampleSecretKey)
