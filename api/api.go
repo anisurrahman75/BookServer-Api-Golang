@@ -27,7 +27,7 @@ func (r *Server) MountHandlers() {
 	r.Router.Post("/api/logIn", handler.LogIn)
 
 	// First User need to log-in and generete JWT token
-	// user can acces this groups function using baerier auth with JWT token only
+	// user can acces this groups function using berier auth with JWT token only
 	r.Router.Group(func(r chi.Router) {
 		r.Use(middleware.VerifyJWT)
 		r.Get("/api/books", handler.AllBookList)
@@ -36,5 +36,4 @@ func (r *Server) MountHandlers() {
 		r.Put("/api/books/{bookId}", handler.UpdateBook)
 		r.Delete("/api/books/{bookId}", handler.DeleteBook)
 	})
-
 }
