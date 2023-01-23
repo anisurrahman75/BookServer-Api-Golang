@@ -3,19 +3,8 @@ package main
 import (
 	"apiDesign/api"
 	"fmt"
-	"github.com/go-chi/chi/v5"
 	"net/http"
 )
-
-type Server struct {
-	Router *chi.Mux
-}
-
-func CreateNewServer() *Server {
-	s := &Server{}
-	s.Router = chi.NewRouter()
-	return s
-}
 
 func main() {
 	// create router by calling CreateRouter function
