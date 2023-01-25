@@ -1,8 +1,8 @@
 package main
 
 import (
-	"apiDesign/api"
 	"fmt"
+	"github.com/anisurahman75/apiDesign/api"
 	"net/http"
 )
 

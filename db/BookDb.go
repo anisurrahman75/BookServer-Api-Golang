@@ -1,6 +1,6 @@
 package db
 
-import "apiDesign/model"
+import "github.com/anisurahman75/apiDesign/model"
 
 var BookList = map[int]model.Book{}
 

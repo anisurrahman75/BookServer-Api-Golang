@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"apiDesign/db"
-	"apiDesign/model"
 	"encoding/json"
+	"github.com/anisurahman75/apiDesign/db"
+	"github.com/anisurahman75/apiDesign/model"
 	"github.com/go-chi/chi/v5"
 	"net/http"
 	"strconv"

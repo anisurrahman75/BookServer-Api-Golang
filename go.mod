@@ -1,4 +1,4 @@
-module apiDesign
+module github.com/anisurahman75/apiDesign
 
 go 1.19
 

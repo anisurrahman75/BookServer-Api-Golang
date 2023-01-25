@@ -1,8 +1,8 @@
 package api
 
 import (
-	"apiDesign/middleware"
 	"bytes"
+	"github.com/anisurahman75/apiDesign/middleware"
 	"io"
 	"net/http"
 	"net/http/httptest"

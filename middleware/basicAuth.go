@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"apiDesign/db"
 	"fmt"
+	"github.com/anisurahman75/apiDesign/db"
 	"net/http"
 )
 

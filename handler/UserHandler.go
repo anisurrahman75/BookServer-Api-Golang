@@ -1,11 +1,11 @@
 package handler
 
 import (
-	"apiDesign/db"
-	"apiDesign/middleware"
-	"apiDesign/model"
 	"encoding/json"
 	"fmt"
+	"github.com/anisurahman75/apiDesign/db"
+	"github.com/anisurahman75/apiDesign/middleware"
+	"github.com/anisurahman75/apiDesign/model"
 
 	"github.com/go-chi/chi/v5"
 	"net/http"

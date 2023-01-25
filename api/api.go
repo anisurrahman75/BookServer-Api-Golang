@@ -1,9 +1,9 @@
 package api
 
 import (
-	"apiDesign/db"
-	"apiDesign/handler"
-	"apiDesign/middleware"
+	"github.com/anisurahman75/apiDesign/db"
+	"github.com/anisurahman75/apiDesign/handler"
+	"github.com/anisurahman75/apiDesign/middleware"
 	"github.com/go-chi/chi/v5"
 )
 
