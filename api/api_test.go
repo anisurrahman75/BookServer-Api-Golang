@@ -12,7 +12,6 @@ import (
 func Test_Welcome(t *testing.T) {
 	s := CreateNewServer()
 	s.MountHandlers()
-
 	req, _ := http.NewRequest("GET", "/api", nil)
 	response := executeRequest(req, s)
 	checkResponseCode(t, http.StatusOK, response.Code)

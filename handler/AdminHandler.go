@@ -32,12 +32,14 @@ func AddBook(w http.ResponseWriter, r *http.Request) {
 }
 func UpdateBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
-
 	temp := chi.URLParam(r, "bookId")
-	bookId, _ := strconv.Atoi(temp)
-
+	bookId, err := strconv.Atoi(temp)
+	if err != nil {
+		model.RequestForError(http.StatusBadRequest, err.Error(), w, "From UpdateBook End-Point: Failed to Failed to Convert bookId")
+		return
+	}
 	var book model.Book
-	err := json.NewDecoder(r.Body).Decode(&book)
+	err = json.NewDecoder(r.Body).Decode(&book)
 	if err != nil {
 		model.RequestForError(http.StatusBadRequest, err.Error(), w, "From UpdateBook End-Point: Failed to Decode Data From Request")
 		return
@@ -58,7 +60,11 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
 	temp := chi.URLParam(r, "bookId")
-	bookId, _ := strconv.Atoi(temp)
+	bookId, err := strconv.Atoi(temp)
+	if err != nil {
+		model.RequestForError(http.StatusBadRequest, err.Error(), w, "From DeleteBook End-Point: Failed to Convert bookId")
+		return
+	}
 	if _, ok := db.BookList[bookId]; ok {
 		var book model.Book
 		book = db.BookList[bookId]

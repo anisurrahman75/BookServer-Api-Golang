@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"encoding/base64"
+"encoding/base64"
 )
 
 func BasicToken(user, pas string) string {

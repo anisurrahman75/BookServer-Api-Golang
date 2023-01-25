@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"fmt"
-	"github.com/anisurahman75/apiDesign/db"
-	"net/http"
+"fmt"
+"github.com/anisurahman75/apiDesign/db"
+"net/http"
 )
 
 func checkValidUser(userName, password string) bool {
