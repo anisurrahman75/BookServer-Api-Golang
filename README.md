@@ -43,7 +43,6 @@ $ ./apiDesign startServer -a=false # Run server without authentication
 ***
 ```shell
 $ docker pull anisurrahman75/book-server-api:v1.3
-$ docker build -t anisurrahman75/book-server-api:v1.3 .
 $ docker run  -p 3030:3030 anisurrahman75/book-server-api:v1.3 # without auth
 ```
 # Available API EndPoints
