@@ -48,6 +48,7 @@ func Test_logIn(t *testing.T) {
 		req, _ := http.NewRequest(i.method, i.url, i.body)
 		req.Header.Set("Authorization", i.token)
 		response := executeRequest(req, s)
+		//fmt.Println(response.Code)
 		checkResponseCode(t, i.expectedStatusCode, response.Code)
 	}
 }

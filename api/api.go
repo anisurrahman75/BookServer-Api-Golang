@@ -37,3 +37,16 @@ func (r *Server) MountHandlers() {
 		r.Delete("/api/books/{bookId}", handler.DeleteBook)
 	})
 }
+
+//package main
+//
+//import (
+//"fmt"
+//"github.com/anisurahman75/apiDesign/api"
+//"net/http"
+//)
+//
+//func main() {
+//	// create router by calling CreateRouter function
+//
+//}

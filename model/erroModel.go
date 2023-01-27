@@ -20,6 +20,5 @@ func RequestForError(statusCode int, err string, w http.ResponseWriter, msg stri
 		msg,
 	}
 	w.WriteHeader(statusCode)
-	er := json.NewEncoder(w).Encode(temp)
-	http.Error(w, er.Error(), http.StatusBadRequest)
+	_ = json.NewEncoder(w).Encode(temp)
 }
