@@ -11,4 +11,4 @@ FROM alpine:latest
 WORKDIR /root/
 COPY --from=builder /app/main .
 EXPOSE 3030
-CMD ["./main","startServer"]
+CMD ["./main","startServer","-a=false"]

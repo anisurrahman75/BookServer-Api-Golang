@@ -28,20 +28,24 @@ This API server provides endpoints to create,read,update & delete users and Book
 
 `$ git mod tidy && go mod vendor`
 
-`$ go run main.go`
-# To Start API Server Locally
-***
-`$ git clone https://github.com/anisurrahman75/BookServer-Api-Golang.git`
-
-`$ git mod tidy && go mod vendor`
-
 `$ go build`
 
 `$ ./apiDesign startServer` 
 
-**Note: default port:3030 && Authentication: JWT**
-## Custom Port && Without Authentication ##
-`$ ./apiDesign startServer -p=<your_port> -a=false`
+**Note: Default Port: 3030 && Authentication: JWT**
+# Custom Port && Without Authentication 
+***
+```shell
+$ ./apiDesign startServer -p=<your_port> #Your custom port  
+$ ./apiDesign startServer -a=false # Run server without authentication
+```
+# To Start API Server using Docker
+***
+```shell
+$ docker pull anisurrahman75/book-server-api:v1.3
+$ docker build -t anisurrahman75/book-server-api:v1.3 .
+$ docker run  -p 3030:3030 anisurrahman75/book-server-api:v1.3 # without auth
+```
 # Available API EndPoints
 
 Method | API EndPoint        | Authentication Type   | PayLoad               | Description                                             |Curl Command                                      
@@ -62,3 +66,4 @@ DELETE| /api/books/{bookId} | Bearer Token Required | Not-Required          | De
 * [HTTP Response Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
 * [JWT Token](https://blog.logrocket.com/jwt-authentication-go)
 * [UNIT Testing](https://go-chi.io/#/pages/testing)
+* [Cobra CLI](https://github.com/spf13/cobra)
