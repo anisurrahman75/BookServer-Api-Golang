@@ -12,20 +12,19 @@ import (
 )
 
 // startServerCmd represents the startServer command
+
 var startServerCmd = &cobra.Command{
 	Use:   "startServer",
 	Short: "CMD: StartServer for Running this apiServer ",
 	Long:  `This API server provides endpoints to create,read,update & delete users and Books.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		var port string = ":3000"
 
-		if len(args) > 0 {
-			port = args[0]
-		}
-		log.Println("start called! start the server at port", port)
+		log.Println("\n----------------------StartServer Called!")
+		fmt.Println("----------------------Port: ", api.Port, "\n----------------------Authentication: ", api.Auth, "\n\n")
 		s := api.CreateNewServer()
 		s.MountHandlers()
-		err := http.ListenAndServe(port, s.Router)
+		tem := ":" + api.Port
+		err := http.ListenAndServe(tem, s.Router)
 		if err != nil {
 			fmt.Printf("error : %s\n", err.Error())
 		}
@@ -34,6 +33,6 @@ var startServerCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(startServerCmd)
-	var port string
-	startServerCmd.Flags().StringVar(&port, "port", ":3000", "Running this port")
+	startServerCmd.PersistentFlags().StringVarP(&api.Port, "Port", "p", "3030", "This flag sets the Port of the server")
+	startServerCmd.PersistentFlags().BoolVarP(&api.Auth, "Auth", "a", true, "This flag will impose/bypass authentication to API server")
 }

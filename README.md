@@ -22,14 +22,26 @@ This API server provides endpoints to create,read,update & delete users and Book
     "ISBN": "0999-0555-5954"
 }
 ```
-# To Start API Server
+# To Start API Server Locally
 ***
 `$ git clone https://github.com/anisurrahman75/BookServer-Api-Golang.git`
 
 `$ git mod tidy && go mod vendor`
 
 `$ go run main.go`
+# To Start API Server Locally
+***
+`$ git clone https://github.com/anisurrahman75/BookServer-Api-Golang.git`
 
+`$ git mod tidy && go mod vendor`
+
+`$ go build`
+
+`$ ./apiDesign startServer` 
+
+**Note: default port:3030 && Authentication: JWT**
+## Custom Port && Without Authentication ##
+`$ ./apiDesign startServer -p=<your_port> -a=false`
 # Available API EndPoints
 
 Method | API EndPoint        | Authentication Type   | PayLoad               | Description                                             |Curl Command                                      
