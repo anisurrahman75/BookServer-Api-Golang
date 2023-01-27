@@ -50,14 +50,14 @@ $ docker run  -p 3030:3030 anisurrahman75/book-server-api:v1.3 # without auth
 
 Method | API EndPoint        | Authentication Type   | PayLoad               | Description                                             |Curl Command                                      
 --- |---------------------|-----------------------|-----------------------|---------------------------------------------------------|-------------------
- GET| /api                | No-Auth               | Not-Required          | Welcome page of this Book-Server                        |`$ curl -X GET http://localhost:3000/api`
-POST| /api/registerUser   | No-Auth               | Json File: User Model | Register a new User                                     |`$ curl -X POST -H "Content-Type:application/json" -d '<userModelJson>' http://localhost:3000/api/registerUser`
-POST| /api/logIn          | Basic-Auth            | Not-Required          | LogIn with registered user,pass and get bearer token    |`$ curl -X POST --user  '<userName>:<passWord>' localhost:3000/api/logIn`
- GET| /api/books          | Bearer Token Required | Not-Required          | Get all BooksList frrom database in response            |`$ curl -X GET -H "Authorization: Bearer <bearerToken>" http://localhost:3000/api/books`
-POST| /api/books          | Bearer Token Required | Json File: Book Model | Add new book and return added bookDetails in response   |`$ curl -X POST -H "Authorization: Bearer <bearerToken>" -H "Content-Type:application/json" -d '<bookModelJson>' localhost:3000/api/books`
- GET| /api/books/{bookId} | Bearer Token Required | Not-Required          | Search book with bookId and get bookDetails in response |`$ curl -X GET -H "Authorization: Bearer <bearerToken>" localhost:3000/api/books/<bookId>`
- PUT| /api/books/{bookId} | Bearer Token Required | Json File: Book Model | Update book and return updated bookDetails in response  |`$ curl -X PUT -H "Authorization: Bearer <bearerToken>" -H "Content-Type:application/json" -d '<bookModelJson>' localhost:3000/api/books/<bookId>`
-DELETE| /api/books/{bookId} | Bearer Token Required | Not-Required          | Delete a aook and return deleted bookDetails in response|`$ curl -X DELETE -H "Authorization: Bearer <bearerToken>" localhost:3000/api/books/<bookId>`
+ GET| /api                | No-Auth               | Not-Required          | Welcome page of this Book-Server                        |`$ curl -X GET http://localhost:3030/api`
+POST| /api/registerUser   | No-Auth               | Json File: User Model | Register a new User                                     |`$ curl -X POST -H "Content-Type:application/json" -d '<userModelJson>' http://localhost:3030/api/registerUser`
+POST| /api/logIn          | Basic-Auth            | Not-Required          | LogIn with registered user,pass and get bearer token    |`$ curl -X POST --user  '<userName>:<passWord>' localhost:3030/api/logIn`
+ GET| /api/books          | Bearer Token Required | Not-Required          | Get all BooksList frrom database in response            |`$ curl -X GET -H "Authorization: Bearer <bearerToken>" http://localhost:3030/api/books`
+POST| /api/books          | Bearer Token Required | Json File: Book Model | Add new book and return added bookDetails in response   |`$ curl -X POST -H "Authorization: Bearer <bearerToken>" -H "Content-Type:application/json" -d '<bookModelJson>' localhost:3030/api/books`
+ GET| /api/books/{bookId} | Bearer Token Required | Not-Required          | Search book with bookId and get bookDetails in response |`$ curl -X GET -H "Authorization: Bearer <bearerToken>" localhost:3030/api/books/<bookId>`
+ PUT| /api/books/{bookId} | Bearer Token Required | Json File: Book Model | Update book and return updated bookDetails in response  |`$ curl -X PUT -H "Authorization: Bearer <bearerToken>" -H "Content-Type:application/json" -d '<bookModelJson>' localhost:3030/api/books/<bookId>`
+DELETE| /api/books/{bookId} | Bearer Token Required | Not-Required          | Delete a aook and return deleted bookDetails in response|`$ curl -X DELETE -H "Authorization: Bearer <bearerToken>" localhost:3030/api/books/<bookId>`
 
 # Resources
 ***
