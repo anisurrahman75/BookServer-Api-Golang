@@ -11,8 +11,6 @@ import (
 	"net/http"
 )
 
-// startServerCmd represents the startServer command
-
 var startServerCmd = &cobra.Command{
 	Use:   "startServer",
 	Short: "CMD: StartServer for Running this apiServer ",
