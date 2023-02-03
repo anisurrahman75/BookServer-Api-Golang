@@ -5,6 +5,7 @@ import (
 	"github.com/anisurahman75/apiDesign/handler"
 	"github.com/anisurahman75/apiDesign/middleware"
 	"github.com/go-chi/chi/v5"
+	mi "github.com/go-chi/chi/v5/middleware"
 )
 
 var Port string
@@ -22,6 +23,7 @@ func CreateNewServer() *Server {
 func (r *Server) MountHandlers() {
 	db.UserInit()
 	db.BookInit()
+	r.Router.Use(mi.Logger)
 	r.Router.Get("/api", handler.Welcome)
 	//Any user can register using user information, see user model on model section.
 	r.Router.Post("/api/registerUser", handler.Register)

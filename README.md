@@ -42,8 +42,8 @@ $ ./apiDesign startServer -a=false # Run server without authentication
 # To Start API Server using Docker
 ***
 ```shell
-$ docker pull anisurrahman75/book-server-api:v1.3
-$ docker run  -p 3030:3030 anisurrahman75/book-server-api:v1.3 # without auth
+$ docker pull anisurrahman75/book-server-api:v1.4
+$ docker run  -p 3030:3030 anisurrahman75/book-server-api:v1.4 # without auth
 ```
 # Available API EndPoints
 
@@ -60,7 +60,7 @@ DELETE| /api/books/{bookId} | Bearer Token Required | Not-Required          | De
 
 # Resources
 ***
-* [sysdevbd learn GO](https://sysdevbd.com/go/)
+* [sysdevbd learn GO](https://github.com/sysdevbd/sysdevbd.github.io/tree/master/go)
 * [A Beginner’s Guide to HTTP and REST](https://code.tutsplus.com/tutorials/a-beginners-guide-to-http-and-rest--net-16340)
 * [HTTP Response Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
 * [JWT Token](https://blog.logrocket.com/jwt-authentication-go)
