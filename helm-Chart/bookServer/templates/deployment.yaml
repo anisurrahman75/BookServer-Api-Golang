@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name}}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.deployAccount.selector }}
+  replicas: {{ .Values.replicaCount}}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployAccount.selector}}
+    spec:
+      containers:
+        - name: {{ .Values.deployAccount.containers.name}}
+          image: {{.Values.image.repository | quote}}
+          ports: {{.Values.deployAccount.port}}
+            - containerPort: 3030

@@ -1,0 +1,20 @@
+
+replicaCount: 15
+image:
+  repository: anisurrahman75/book-server-api:v1.4
+  pullPolicy: IfNotPresent
+
+
+deployAccount:
+  name: app
+  selector: app
+  containers:
+    name: go-web
+    port: 3030
+
+
+service:
+  type: NodePort
+  port: 3030
+  nodePort: 30040
+  protocol: TCP
