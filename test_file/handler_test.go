@@ -1,7 +1,8 @@
-package handler
+package test_file
 
 import (
 	"bytes"
+	"github.com/anisurahman75/apiDesign/api/handler"
 	middleware2 "github.com/anisurahman75/apiDesign/api/middleware"
 	"io"
 	"net/http"
@@ -10,14 +11,14 @@ import (
 )
 
 func Test_Welcome(t *testing.T) {
-	s := CreateNewServer()
+	s := handler.CreateNewServer()
 	s.MountHandlers()
 	req, _ := http.NewRequest("GET", "/api", nil)
 	response := executeRequest(req, s)
 	checkResponseCode(t, http.StatusOK, response.Code)
 }
 func Test_logIn(t *testing.T) {
-	s := CreateNewServer()
+	s := handler.CreateNewServer()
 	s.MountHandlers()
 	type Test struct {
 		method             string
@@ -53,7 +54,7 @@ func Test_logIn(t *testing.T) {
 	}
 }
 func Test_Register(t *testing.T) {
-	s := CreateNewServer()
+	s := handler.CreateNewServer()
 	s.MountHandlers()
 	type Test struct {
 		method             string
@@ -82,7 +83,7 @@ func Test_Register(t *testing.T) {
 	}
 }
 func Test_AllBookList(t *testing.T) {
-	s := CreateNewServer()
+	s := handler.CreateNewServer()
 	s.MountHandlers()
 	type Test struct {
 		method             string
@@ -115,7 +116,7 @@ func Test_AllBookList(t *testing.T) {
 	}
 }
 func Test_AddBook(t *testing.T) {
-	s := CreateNewServer()
+	s := handler.CreateNewServer()
 	s.MountHandlers()
 	type Test struct {
 		method             string
@@ -147,7 +148,7 @@ func Test_AddBook(t *testing.T) {
 	}
 }
 func Test_FindBook(t *testing.T) {
-	s := CreateNewServer()
+	s := handler.CreateNewServer()
 	s.MountHandlers()
 	type Test struct {
 		method             string
@@ -178,7 +179,7 @@ func Test_FindBook(t *testing.T) {
 	}
 }
 func Test_UpdateBook(t *testing.T) {
-	s := CreateNewServer()
+	s := handler.CreateNewServer()
 	s.MountHandlers()
 	type Test struct {
 		method             string
@@ -209,7 +210,7 @@ func Test_UpdateBook(t *testing.T) {
 	}
 }
 func Test_DeleteBook(t *testing.T) {
-	s := CreateNewServer()
+	s := handler.CreateNewServer()
 	s.MountHandlers()
 	type Test struct {
 		method             string
@@ -239,7 +240,7 @@ func Test_DeleteBook(t *testing.T) {
 		checkResponseCode(t, i.expectedStatusCode, response.Code)
 	}
 }
-func executeRequest(req *http.Request, s *Server) *httptest.ResponseRecorder {
+func executeRequest(req *http.Request, s *handler.Server) *httptest.ResponseRecorder {
 	rr := httptest.NewRecorder()
 	s.Router.ServeHTTP(rr, req)
 	return rr

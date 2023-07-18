@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"github.com/anisurahman75/apiDesign/api/db"
 	"github.com/anisurahman75/apiDesign/api/middleware"
+	"github.com/anisurahman75/apiDesign/db"
 	"github.com/go-chi/chi/v5"
 	mi "github.com/go-chi/chi/v5/middleware"
 )
