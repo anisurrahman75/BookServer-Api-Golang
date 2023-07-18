@@ -11,9 +11,6 @@ var Port string
 var Auth bool
 
 func (s *Server) MountHandlers() {
-
-	db.UserInit()
-	db.BookInit()
 	db.Load(s.DB)
 
 	s.Router.Use(mi.Logger)

@@ -3,11 +3,11 @@ package model
 import "gorm.io/gorm"
 
 type Book struct {
-	UUID        int    `json:"uuid"`
-	Name        string `json:"name"`
-	Author      string `json:"author"`
-	PublishDate string `json:"publishDate"`
-	ISBN        string `json:"ISBN"`
+	UUID        int    `gorm:"primary_key" json:"uuid"`
+	Name        string `gorm:"size:255" json:"name"`
+	Author      string `gorm:"size:255;not null;"json:"author"`
+	PublishDate string `gorm:"size:255" json:"publishDate"`
+	ISBN        string `gorm:"size:255; unique" json:"ISBN"`
 }
 
 func (u *Book) GetAllBooks(db *gorm.DB) (*[]Book, error) {

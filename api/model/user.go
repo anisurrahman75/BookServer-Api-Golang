@@ -3,10 +3,10 @@ package model
 import "gorm.io/gorm"
 
 type User struct {
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	UserName  string `json:"userName"`
-	Password  string `json:"password"`
+	FirstName string `gorm:"size:255" json:"firstName"`
+	LastName  string `gorm:"size:255" json:"lastName"`
+	UserName  string `gorm:"primary_key; unique" json:"userName"`
+	Password  string `gorm:"size:255" json:"password"`
 }
 
 func (u *User) GetAllUsers(db *gorm.DB) (*[]User, error) {

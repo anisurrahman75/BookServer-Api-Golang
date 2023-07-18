@@ -7,9 +7,9 @@ import (
 )
 
 var books = []model2.Book{
-	{UUID: 1, Name: "golang in action", Author: "Anisur", PublishDate: "01-02-2022", ISBN: "0999-0555-5954"},
-	{UUID: 2, Name: "programming in k8s", Author: "Anisur", PublishDate: "01-02-2022", ISBN: "0999-0555-5954"},
-	{UUID: 3, Name: "hands on kubernetes", Author: "Anisur", PublishDate: "01-02-2022", ISBN: "0999-0555-5954"},
+	{UUID: 1, Name: "golang in action", Author: "Anisur", PublishDate: "01-02-2022", ISBN: "0999-0555-5951"},
+	{UUID: 2, Name: "programming in k8s", Author: "Anisur", PublishDate: "01-02-2022", ISBN: "0999-0555-5952"},
+	{UUID: 3, Name: "hands on kubernetes", Author: "Anisur", PublishDate: "01-02-2022", ISBN: "0999-0555-5953"},
 	{UUID: 4, Name: "web application in go", Author: "Anisur", PublishDate: "01-02-2022", ISBN: "0999-0555-5954"},
 }
 var users = []model2.User{

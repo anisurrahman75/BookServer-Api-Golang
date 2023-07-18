@@ -2,22 +2,17 @@ package middleware
 
 import (
 	"fmt"
-	"github.com/anisurahman75/apiDesign/api/db"
 	"net/http"
 )
 
 func checkValidUser(userName, password string) bool {
-	for _, i := range db.UserList {
-		if userName == i.UserName && password == i.Password {
-			return true
-		}
-	}
 	return false
 }
 
 func BasicAuth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		username, password, ok := r.BasicAuth()
+
 		if ok {
 			if !checkValidUser(username, password) {
 				http.Error(w, "Wrong UserName or Password\n", http.StatusUnauthorized)
