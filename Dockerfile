@@ -10,5 +10,6 @@ RUN CGO_ENABLED=0 go build -o main -a
 FROM alpine:latest
 WORKDIR /root/
 COPY --from=builder /app/main .
+COPY --from=builder /app/.env .
 EXPOSE 3030
 CMD ["./main","startServer","-a=false"]

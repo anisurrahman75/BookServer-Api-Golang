@@ -10,7 +10,11 @@ type Book struct {
 	ISBN        string `gorm:"size:255; unique" json:"ISBN"`
 }
 
-func (u *Book) GetAllBooks(db *gorm.DB) (*[]Book, error) {
+func (b *Book) Exist() {
+	
+}
+
+func (b *Book) GetAllBooks(db *gorm.DB) (*[]Book, error) {
 	var books []Book
 	if err := db.Find(&books).Error; err != nil {
 		return nil, err

@@ -1,0 +1,30 @@
+version: '3'
+services:
+  mysql_db:
+    container_name: bookserver_api
+    image: 'mysql'
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - MYSQL_USER=${DB_DRIVER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - DATABASE_HOST=${DB_HOST}
+      - LC_ALL=C.UTF-8
+      - LANG=C.UTF-8
+    ports:
+      - 3306:3306
+    volumes:
+        - ./data:/lib/mysql
+        - ./sql:/docker-entrypoint-initdb.d
+  bookServer_api:
+    build: .
+    restart: on-failure
+    depends_on:
+      - mysql_db
+    links:
+      - mysql_db
+    ports:
+      - 3030:3030
+
+
+
