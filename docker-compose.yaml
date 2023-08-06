@@ -1,8 +1,9 @@
-version: '3'
+version: '3.9'
 services:
-  mysql_db:
-    container_name: bookserver_api
-    image: 'mysql'
+  mysql:
+    container_name: mysql
+    image: mysql
+    restart: always
     environment:
       - MYSQL_DATABASE=${DB_NAME}
       - MYSQL_ROOT_PASSWORD=${DB_PASS}
@@ -12,19 +13,20 @@ services:
       - LC_ALL=C.UTF-8
       - LANG=C.UTF-8
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
-        - ./data:/lib/mysql
-        - ./sql:/docker-entrypoint-initdb.d
-  bookServer_api:
+      - mysql_data:/var/lib/mysql
+  book_server:
+    container_name: book_server
     build: .
-    restart: on-failure
+    image: book_server:latest
+    restart: always
     depends_on:
-      - mysql_db
+      - mysql
     links:
-      - mysql_db
+      - mysql
     ports:
-      - 3030:3030
-
-
+      - "3030:3030"
+volumes:
+  mysql_data:
 

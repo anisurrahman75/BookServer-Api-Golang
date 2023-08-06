@@ -6,6 +6,7 @@ import (
 	"gorm.io/gorm"
 	"log"
 	"os"
+	"time"
 )
 
 func Initialize() *gorm.DB {
@@ -14,13 +15,13 @@ func Initialize() *gorm.DB {
 	DbPort := os.Getenv("DB_PORT")
 	DbHost := os.Getenv("DB_HOST")
 	DbName := os.Getenv("DB_NAME")
-
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", DbUser, DbPassword, DbHost, DbPort, DbName)
-
+	time.Sleep(5 * time.Second)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", DbUser, DbPassword, DbHost, DbPort, DbName)
+	fmt.Println("DSN: ", dsn)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal("There is an Error: %w", err)
+		log.Fatal("There is an Error: ", err)
 	}
-	fmt.Println("------------------Finally Connected--------------------")
+	fmt.Println("------------------DB connection Successfully--------------------")
 	return db
 }

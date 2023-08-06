@@ -1,3 +1,5 @@
+DOCKER_USERNAME ?= anisurrahman75
+APPLICATION_NAME ?= bookserver-golang-mysql
 appName ?= serverBinary
 RELEASE_NAME ?= bookserver
 
@@ -22,3 +24,25 @@ helm-uninstall:
 clean:
 	@echo Cleaning up.....
 	rm -rf ${appName}
+
+CONTAINERS := book_server mysql
+.PHONY: delete-containers
+delete_container_%:
+	@container_name=$*; \
+	if docker ps --format '{{.Names}}' | grep -q "$$container_name"; then \
+		docker kill "$$container_name"; \
+	fi;
+	@container_name=$*; \
+	if docker ps -a --format '{{.Names}}' | grep -q "$$container_name"; then \
+		docker rm "$$container_name"; \
+	fi;
+	@container_name=$*; \
+	if docker images "$$container_name"; then \
+		docker rmi "$$container_name"; \
+	fi;
+
+delete-containers: $(addprefix delete_container_, $(CONTAINERS))
+
+run docker-compose:
+	sudo systemctl restart docker
+	docker-compose up --remove-orphan
