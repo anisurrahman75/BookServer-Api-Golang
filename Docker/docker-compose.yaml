@@ -19,7 +19,7 @@ services:
 
   book_server:
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile
     image: "${ACCOUNT_NAME}/${COMPOSE_PROJECT_NAME}:${TAG}"
     restart: always

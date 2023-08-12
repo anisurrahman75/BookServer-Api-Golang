@@ -1,6 +1,10 @@
 package model
 
-import "gorm.io/gorm"
+import (
+	"errors"
+	"gorm.io/gorm"
+	"log"
+)
 
 type Book struct {
 	UUID        int    `gorm:"primary_key" json:"uuid"`
@@ -10,8 +14,22 @@ type Book struct {
 	ISBN        string `gorm:"size:255; unique" json:"ISBN"`
 }
 
-func (b *Book) Exist() {
-	
+func (b *Book) Exist(db *gorm.DB) bool {
+	if result := db.First(&b, b.UUID); result != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return false
+		}
+		log.Fatal(result)
+	}
+	return true
+}
+
+func (b *Book) Create(db *gorm.DB) int64 {
+	result := db.Create(&b)
+	if result.Error != nil {
+		log.Fatalf("%w", result.Error)
+	}
+	return result.RowsAffected
 }
 
 func (b *Book) GetAllBooks(db *gorm.DB) (*[]Book, error) {

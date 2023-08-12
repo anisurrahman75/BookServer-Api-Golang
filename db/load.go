@@ -12,6 +12,7 @@ var books = []model2.Book{
 	{UUID: 3, Name: "hands on kubernetes", Author: "Anisur", PublishDate: "01-02-2022", ISBN: "0999-0555-5953"},
 	{UUID: 4, Name: "web application in go", Author: "Anisur", PublishDate: "01-02-2022", ISBN: "0999-0555-5954"},
 }
+
 var users = []model2.User{
 	{FirstName: "anisur", LastName: "Rahman", UserName: "sunny", Password: "123"},
 	{FirstName: "Mridul", LastName: "Halder", UserName: "mridul12", Password: "123"},

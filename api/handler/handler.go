@@ -34,26 +34,22 @@ func (s *Server) AddBook(w http.ResponseWriter, r *http.Request) {
 		model.RequestForError(http.StatusBadRequest, err.Error(), w, "From AddBook End-Point: Json Data Decode Failed")
 		return
 	}
-
-	var queryBook model.Book
-	queryErr := s.DB.First(&queryBook, book.UUID)
-
-	if err != nil {
-		if errors.Is(queryErr.Error, gorm.ErrRecordNotFound) {
-			_, _ = w.Write([]byte("book successfully added. "))
-			s.DB.Create(&book)
-			w.WriteHeader(http.StatusOK)
-			err = json.NewEncoder(w).Encode(book)
-			if err != nil {
-				model.RequestForError(http.StatusBadRequest, "", w, "From AddBook End-Point: Failed to write data in response body")
-			}
-		} else {
-			model.RequestForError(http.StatusBadRequest, err.Error(), w, "From AddBook End-Point.")
-		}
+	if book.Exist(s.DB) {
+		model.RequestForError(http.StatusBadRequest, "", w, "From AddBook End-Point: Book with this ID already exists")
 		return
 	}
+	isCreated := book.Create(s.DB)
+	if isCreated == int64(0) {
+		model.RequestForError(http.StatusBadRequest, err.Error(), w, "From AddBook End-Point: Failed to Add book in Database table.")
+		return
+	}
+	_, _ = w.Write([]byte("book successfully added. "))
+	w.WriteHeader(http.StatusOK)
+	err = json.NewEncoder(w).Encode(book)
+	if err != nil {
+		model.RequestForError(http.StatusBadRequest, "", w, "From AddBook End-Point: Failed to write data in response body")
+	}
 
-	model.RequestForError(http.StatusBadRequest, "", w, "From AddBook End-Point: Book with this ID already exists")
 }
 
 func (s *Server) UpdateBook(w http.ResponseWriter, r *http.Request) {
