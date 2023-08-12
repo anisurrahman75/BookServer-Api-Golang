@@ -197,7 +197,7 @@ func Test_UpdateBook(t *testing.T) {
 		},
 		{"PUT",
 			"/api/books/100",
-			bytes.NewReader([]byte(`{"UUID": 4, "Name": "learn-api", "Author": "RaselVai", "PublishDate": "01-02-2022", "ISBN": "0999-0555-5954"},`)),
+			bytes.NewReader([]byte(`{"UUID": 100, "Name": "learn-api", "Author": "RaselVai", "PublishDate": "01-02-2022", "ISBN": "0999-0555-5954"},`)),
 			middleware2.BearerToken("sunny"),
 			http.StatusBadRequest,
 		},
@@ -209,6 +209,7 @@ func Test_UpdateBook(t *testing.T) {
 		checkResponseCode(t, i.expectedStatusCode, response.Code)
 	}
 }
+
 func Test_DeleteBook(t *testing.T) {
 	s := handler.CreateNewServer()
 	s.MountHandlers()

@@ -24,13 +24,11 @@ This API server provides endpoints to create,read,update & delete users and Book
 ```
 # To Start API Server Locally
 ***
-`$ git clone https://github.com/anisurrahman75/BookServer-Api-Golang.git`
+`$ git clone https://github.com/anisurrahman75/bookserver-api-mysql.git`
 
-`$ git mod tidy && go mod vendor`
+`$ make compose-build; make compose-start`
 
-`$ go build`
-
-`$ ./apiDesign startServer` 
+`$ ./apiDesign startServer -a=false` 
 
 **Note: Default Port: 3030 && Authentication: JWT**
 # Custom Port && Without Authentication 
