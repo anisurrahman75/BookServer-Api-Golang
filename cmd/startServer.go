@@ -7,7 +7,6 @@ import (
 	"flag"
 	"fmt"
 	"github.com/anisurahman75/apiDesign/api/handler"
-	"github.com/joho/godotenv"
 	"github.com/spf13/cobra"
 	"log"
 	"net/http"
@@ -21,10 +20,6 @@ var startServerCmd = &cobra.Command{
 		flag.Parse()
 		log.Println("\n----------------------StartServer Called!")
 		fmt.Println("----------------------Port: ", handler.Port, "\n----------------------Authentication: ", handler.Auth, "\n\n")
-		if err := godotenv.Load(); err != nil {
-			log.Fatalf("Error getting env, %v", err)
-		}
-		fmt.Println("We are getting the env values")
 		s := handler.CreateNewServer()
 		s.MountHandlers()
 		tem := ":" + handler.Port

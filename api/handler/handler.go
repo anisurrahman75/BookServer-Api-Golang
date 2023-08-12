@@ -8,7 +8,9 @@ import (
 	"github.com/anisurahman75/apiDesign/api/model"
 	"github.com/anisurahman75/apiDesign/db"
 	"github.com/go-chi/chi/v5"
+	"github.com/joho/godotenv"
 	"gorm.io/gorm"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -20,6 +22,10 @@ type Server struct {
 }
 
 func CreateNewServer() *Server {
+	if err := godotenv.Load("../.env"); err != nil {
+		log.Fatalf("Error getting env, %v", err)
+	}
+	fmt.Println("We are getting the env values")
 	s := &Server{}
 	s.Router = chi.NewRouter()
 	s.DB = db.Initialize()
@@ -43,13 +49,12 @@ func (s *Server) AddBook(w http.ResponseWriter, r *http.Request) {
 		model.RequestForError(http.StatusBadRequest, err.Error(), w, "From AddBook End-Point: Failed to Add book in Database table.")
 		return
 	}
-	_, _ = w.Write([]byte("book successfully added. "))
-	w.WriteHeader(http.StatusOK)
 	err = json.NewEncoder(w).Encode(book)
 	if err != nil {
 		model.RequestForError(http.StatusBadRequest, "", w, "From AddBook End-Point: Failed to write data in response body")
 	}
-
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write([]byte("book successfully added. "))
 }
 
 func (s *Server) UpdateBook(w http.ResponseWriter, r *http.Request) {
@@ -66,10 +71,18 @@ func (s *Server) UpdateBook(w http.ResponseWriter, r *http.Request) {
 		model.RequestForError(http.StatusBadRequest, err.Error(), w, "From UpdateBook End-Point: Failed to Decode Data From Request")
 		return
 	}
-	s.DB.Model(model.Book{}).Where("uuid = ?", bookId).Updates(book)
+	if bookId != book.UUID {
+		model.RequestForError(http.StatusBadRequest, "", w, "From UpdateBook End-Point: UrlParam BookID doesn't match to Reques BookId")
+		return
+	}
+	isUpdated := book.Update(s.DB)
+	if isUpdated == int64(0) {
+		model.RequestForError(http.StatusBadRequest, "", w, "From UpdateBook End-Point: Failed to Update in Database table.")
+		return
+	}
 	err = json.NewEncoder(w).Encode(book)
 	if err != nil {
-		model.RequestForError(http.StatusBadRequest, err.Error(), w, "From UpdateBook End-Point: Failed to Encode Data To Response")
+		model.RequestForError(http.StatusBadRequest, err.Error(), w, "From UpdateBook End-Point: Failed to write data in response body")
 		return
 	}
 	w.WriteHeader(http.StatusOK)
@@ -78,26 +91,29 @@ func (s *Server) UpdateBook(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) DeleteBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
+	var book model.Book
+	var err error
 	temp := chi.URLParam(r, "bookId")
-	bookId, err := strconv.Atoi(temp)
+	book.UUID, err = strconv.Atoi(temp)
 	if err != nil {
 		model.RequestForError(http.StatusBadRequest, err.Error(), w, "From DeleteBook End-Point: Failed to Convert bookId")
 		return
 	}
-	var queryBook model.Book
-	queryErr := s.DB.First(&queryBook, bookId)
-	if queryErr != nil && errors.Is(queryErr.Error, gorm.ErrRecordNotFound) {
+	if !book.Exist(s.DB) {
 		model.RequestForError(http.StatusBadRequest, "", w, "From DeleteBook End-Point: BookServer have no Book with this bookID")
 		return
 	}
-	s.DB.Delete(&queryBook, bookId)
-
-	_, _ = w.Write([]byte("Book Delete Successfully\n"))
-	w.WriteHeader(http.StatusOK)
-	err = json.NewEncoder(w).Encode(queryBook)
+	isDeleted := book.Delete(s.DB)
+	if isDeleted == int64(0) {
+		model.RequestForError(http.StatusBadRequest, "", w, "From DeleteBook End-Point: Failed to Delete in Database table.")
+		return
+	}
+	err = json.NewEncoder(w).Encode(book)
 	if err != nil {
 		model.RequestForError(http.StatusBadRequest, err.Error(), w, "From DeleteBook End-Point: Failed to Encode Data To Response")
 	}
+	_, _ = w.Write([]byte("Book Delete Successfully\n"))
+	w.WriteHeader(http.StatusOK)
 	return
 
 }
@@ -110,22 +126,23 @@ func (s *Server) Register(w http.ResponseWriter, r *http.Request) {
 		model.RequestForError(http.StatusBadRequest, err.Error(), w, "From Register End-Point: Json Data Decode Failed from Request")
 		return
 	}
-	var queryUser model.User
-	queryErr := s.DB.First(&queryUser, user.UserName)
 
-	if err != nil {
-		if errors.Is(queryErr.Error, gorm.ErrRecordNotFound) {
-			s.DB.Create(&user)
-			w.WriteHeader(http.StatusOK)
-			w.Write([]byte("Register Successfully\n"))
-			err = json.NewEncoder(w).Encode(user)
-			if err != nil {
-				model.RequestForError(http.StatusBadRequest, err.Error(), w, "From Register End-Point: Json Data Encode Failed to Response")
-			}
-		} else {
-			model.RequestForError(http.StatusBadRequest, err.Error(), w, "From Register End-Point.")
-		}
+	if user.Exist(s.DB) {
+		model.RequestForError(http.StatusBadRequest, "", w, "From Register End-Point: User with this UserId already exists")
+		return
 	}
+
+	isCreated := user.Create(s.DB)
+	if isCreated == int64(0) {
+		model.RequestForError(http.StatusBadRequest, err.Error(), w, "From Register End-Point: Failed to Register User in Database table.")
+		return
+	}
+	err = json.NewEncoder(w).Encode(user)
+	if err != nil {
+		model.RequestForError(http.StatusBadRequest, "", w, "From Register End-Point: Failed to write data in response body")
+	}
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write([]byte("User Register successfully. "))
 }
 
 func (s *Server) Welcome(w http.ResponseWriter, _ *http.Request) {
@@ -208,7 +225,7 @@ func (s *Server) LogIn(w http.ResponseWriter, r *http.Request) {
 
 func BookList(s *Server) (*[]model.Book, error) {
 	book := model.Book{}
-	books, err := book.GetAllBooks(s.DB)
+	books, err := book.AllBooks(s.DB)
 	if err != nil {
 		return books, err
 	}

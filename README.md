@@ -30,7 +30,7 @@ This API server provides endpoints to create,read,update & delete users and Book
 
 `$ go build`
 
-`$ ./apiDesign startServer` 
+`$ ./apiDesign startServer -a=false` 
 
 **Note: Default Port: 3030 && Authentication: JWT**
 # Custom Port && Without Authentication 
